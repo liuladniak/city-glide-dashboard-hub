@@ -1,11 +1,13 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { 
   Circle,
   MessageCircle,
-  Phone
+  Filter
 } from "lucide-react";
+import { useState } from "react";
 
 const teamMembers = [
   {
@@ -14,8 +16,6 @@ const teamMembers = [
     role: "Senior Guide",
     status: "online",
     avatar: "SJ",
-    lastSeen: "Active now",
-    activity: "Leading Golden Gate tour"
   },
   {
     id: 2,
@@ -23,8 +23,6 @@ const teamMembers = [
     role: "Travel Agent",
     status: "online",
     avatar: "MC",
-    lastSeen: "Active now",
-    activity: "In meeting with clients"
   },
   {
     id: 3,
@@ -32,8 +30,6 @@ const teamMembers = [
     role: "Support Staff",
     status: "away",
     avatar: "EW",
-    lastSeen: "15 min ago",
-    activity: "On lunch break"
   },
   {
     id: 4,
@@ -41,8 +37,6 @@ const teamMembers = [
     role: "Finance",
     status: "online",
     avatar: "DP",
-    lastSeen: "Active now",
-    activity: "Processing payments"
   },
   {
     id: 5,
@@ -50,12 +44,19 @@ const teamMembers = [
     role: "Tour Guide",
     status: "busy",
     avatar: "LR",
-    lastSeen: "2 hours ago",
-    activity: "Leading Alcatraz tour"
+  },
+  {
+    id: 6,
+    name: "Tom Anderson",
+    role: "Support Staff",
+    status: "online",
+    avatar: "TA",
   }
 ];
 
 export function TeamPresence() {
+  const [filter, setFilter] = useState<"all" | "available">("all");
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case "online":
@@ -69,67 +70,66 @@ export function TeamPresence() {
     }
   };
 
-  const getStatusText = (status: string) => {
-    switch (status) {
-      case "online":
-        return "Online";
-      case "away":
-        return "Away";
-      case "busy":
-        return "Busy";
-      default:
-        return "Offline";
-    }
-  };
+  const filteredMembers = teamMembers.filter(member => 
+    filter === "all" || (filter === "available" && member.status === "online")
+  );
 
   return (
     <Card className="bg-white border-slate-200">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-lg font-semibold text-slate-900">Team Status</CardTitle>
-        <p className="text-sm text-slate-600">See who's available right now</p>
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle className="text-lg font-semibold text-slate-900">Team ({filteredMembers.length})</CardTitle>
+            <p className="text-sm text-slate-600">Who's around today</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              variant={filter === "all" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setFilter("all")}
+            >
+              All
+            </Button>
+            <Button
+              variant={filter === "available" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setFilter("available")}
+            >
+              Available
+            </Button>
+          </div>
+        </div>
       </CardHeader>
-      <CardContent className="space-y-3">
-        {teamMembers.map((member) => (
+      <CardContent className="space-y-2">
+        {filteredMembers.map((member) => (
           <div
             key={member.id}
             className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 transition-colors"
           >
             <div className="relative">
-              <div className="w-10 h-10 bg-travel-blue-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-medium">{member.avatar}</span>
+              <div className="w-8 h-8 bg-travel-blue-500 rounded-full flex items-center justify-center">
+                <span className="text-white text-xs font-medium">{member.avatar}</span>
               </div>
               <Circle 
-                className={`absolute -bottom-1 -right-1 w-4 h-4 ${getStatusColor(member.status)} fill-current`}
+                className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 ${getStatusColor(member.status)} fill-current bg-white rounded-full`}
               />
             </div>
             
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1">
+              <div className="flex items-center justify-between">
                 <h4 className="text-sm font-medium text-slate-900 truncate">
                   {member.name}
                 </h4>
-                <Badge variant="secondary" className="text-xs px-2 py-0.5">
-                  {member.role}
-                </Badge>
+                {member.status === "online" && (
+                  <button className="p-1 hover:bg-slate-100 rounded-full">
+                    <MessageCircle className="w-3 h-3 text-slate-500" />
+                  </button>
+                )}
               </div>
-              <div className="flex items-center gap-1 mb-1">
-                <Circle className={`w-2 h-2 ${getStatusColor(member.status)} fill-current`} />
-                <span className="text-xs text-slate-600">{getStatusText(member.status)}</span>
-                <span className="text-xs text-slate-400">• {member.lastSeen}</span>
-              </div>
-              <p className="text-xs text-slate-500 truncate">{member.activity}</p>
+              <Badge variant="secondary" className="text-xs mt-1">
+                {member.role}
+              </Badge>
             </div>
-
-            {member.status === "online" && (
-              <div className="flex gap-1">
-                <button className="p-1 hover:bg-slate-200 rounded-full">
-                  <MessageCircle className="w-4 h-4 text-slate-500" />
-                </button>
-                <button className="p-1 hover:bg-slate-200 rounded-full">
-                  <Phone className="w-4 h-4 text-slate-500" />
-                </button>
-              </div>
-            )}
           </div>
         ))}
       </CardContent>
