@@ -4,8 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { 
   Circle,
-  MessageCircle,
-  Filter
+  Users
 } from "lucide-react";
 import { useState } from "react";
 
@@ -78,15 +77,16 @@ export function TeamPresence() {
     <Card className="bg-white border-slate-200">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <div>
+          <div className="flex items-center gap-2">
+            <Users className="w-4 h-4 text-slate-600" />
             <CardTitle className="text-lg font-semibold text-slate-900">Team ({filteredMembers.length})</CardTitle>
-            <p className="text-sm text-slate-600">Who's around today</p>
           </div>
           <div className="flex items-center gap-2">
             <Button
               variant={filter === "all" ? "default" : "ghost"}
               size="sm"
               onClick={() => setFilter("all")}
+              className="text-xs"
             >
               All
             </Button>
@@ -94,21 +94,22 @@ export function TeamPresence() {
               variant={filter === "available" ? "default" : "ghost"}
               size="sm"
               onClick={() => setFilter("available")}
+              className="text-xs"
             >
               Available
             </Button>
           </div>
         </div>
       </CardHeader>
-      <CardContent className="space-y-2">
+      <CardContent className="space-y-3">
         {filteredMembers.map((member) => (
           <div
             key={member.id}
-            className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 transition-colors"
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors"
           >
             <div className="relative">
-              <div className="w-8 h-8 bg-travel-blue-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-xs font-medium">{member.avatar}</span>
+              <div className="w-9 h-9 bg-travel-blue-500 rounded-full flex items-center justify-center">
+                <span className="text-white text-sm font-medium">{member.avatar}</span>
               </div>
               <Circle 
                 className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 ${getStatusColor(member.status)} fill-current bg-white rounded-full`}
@@ -116,17 +117,10 @@ export function TeamPresence() {
             </div>
             
             <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between">
-                <h4 className="text-sm font-medium text-slate-900 truncate">
-                  {member.name}
-                </h4>
-                {member.status === "online" && (
-                  <button className="p-1 hover:bg-slate-100 rounded-full">
-                    <MessageCircle className="w-3 h-3 text-slate-500" />
-                  </button>
-                )}
-              </div>
-              <Badge variant="secondary" className="text-xs mt-1">
+              <h4 className="text-sm font-medium text-slate-900 truncate mb-1">
+                {member.name}
+              </h4>
+              <Badge variant="secondary" className="text-xs">
                 {member.role}
               </Badge>
             </div>

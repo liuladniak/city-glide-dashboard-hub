@@ -47,13 +47,13 @@ export function WeatherWidget() {
   const getWeatherIcon = () => {
     switch (weather.condition) {
       case "sunny":
-        return <Sun className="w-4 h-4 text-yellow-500" />;
+        return <Sun className="w-5 h-5 text-yellow-500" />;
       case "cloudy":
-        return <Cloud className="w-4 h-4 text-slate-500" />;
+        return <Cloud className="w-5 h-5 text-slate-500" />;
       case "rainy":
-        return <CloudRain className="w-4 h-4 text-blue-500" />;
+        return <CloudRain className="w-5 h-5 text-blue-500" />;
       default:
-        return <Sun className="w-4 h-4 text-yellow-500" />;
+        return <Sun className="w-5 h-5 text-yellow-500" />;
     }
   };
 
@@ -73,12 +73,17 @@ export function WeatherWidget() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="h-auto p-2 bg-gradient-to-br from-travel-blue-500 to-travel-blue-600 text-white hover:from-travel-blue-600 hover:to-travel-blue-700">
-          <div className="flex items-center gap-2">
-            {getWeatherIcon()}
-            <span className="font-semibold">{weather.temperature}°C</span>
-          </div>
-        </Button>
+        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white cursor-pointer hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-md">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              {getWeatherIcon()}
+              <div>
+                <div className="font-semibold text-lg">{weather.temperature}°C</div>
+                <div className="text-xs text-blue-100 capitalize">{weather.condition}</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>

@@ -26,6 +26,13 @@ export function DashboardContent({ userRole }: DashboardContentProps) {
           </div>
         </div>
 
+        {/* Admin Overview Cards - Top Priority for Admin */}
+        {userRole === 'admin' && (
+          <div>
+            <OverviewCards userRole={userRole} />
+          </div>
+        )}
+
         {/* Priority Actions */}
         <QuickActions userRole={userRole} />
 
@@ -35,20 +42,14 @@ export function DashboardContent({ userRole }: DashboardContentProps) {
           <div className="lg:col-span-3 space-y-6">
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
               <MyTasks />
-              <CompactKPIs userRole={userRole} />
+              <TeamPresence />
             </div>
             <RecentBookings />
           </div>
           
-          {/* Right Column - Secondary Info */}
+          {/* Right Column - Personal Info */}
           <div className="space-y-6">
-            <TeamPresence />
-            {userRole === 'admin' && (
-              <div className="pt-4">
-                <h3 className="text-sm font-medium text-gray-700 mb-4">Admin Overview</h3>
-                <OverviewCards userRole={userRole} />
-              </div>
-            )}
+            <CompactKPIs userRole={userRole} />
           </div>
         </div>
 
