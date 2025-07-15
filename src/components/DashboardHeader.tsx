@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Search, Bell, ChevronDown, Menu, Sun, Moon } from "lucide-react";
+import { Search, Bell, ChevronDown, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
+import { RoleDemo } from "./RoleDemo";
 
 interface User {
   name: string;
@@ -23,9 +24,11 @@ interface User {
 
 interface DashboardHeaderProps {
   user: User;
+  currentRole: string;
+  onRoleChange: (role: string) => void;
 }
 
-export function DashboardHeader({ user }: DashboardHeaderProps) {
+export function DashboardHeader({ user, currentRole, onRoleChange }: DashboardHeaderProps) {
   const [darkMode, setDarkMode] = useState(false);
   const [notifications] = useState([
     { id: 1, title: "New booking received", time: "2 min ago", unread: true },
@@ -41,26 +44,29 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
   };
 
   return (
-    <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4">
+    <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 shadow-sm">
       <div className="flex items-center gap-4">
-        <SidebarTrigger className="p-2 hover:bg-slate-100 rounded-lg" />
+        <SidebarTrigger className="p-2 hover:bg-gray-100 rounded-lg" />
         
-        <div className="relative max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
           <Input 
             placeholder="Search bookings, clients, tours..." 
-            className="pl-10 pr-4 py-2 w-80 bg-slate-50 border-slate-200 focus:bg-white"
+            className="pl-10 pr-4 py-2 w-80 bg-gray-50 border-gray-200 focus:bg-white focus:border-blue-500"
           />
         </div>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-4">
+        {/* Role Switcher */}
+        <RoleDemo currentRole={currentRole} onRoleChange={onRoleChange} />
+
         {/* Dark Mode Toggle */}
         <Button
           variant="ghost"
           size="sm"
           onClick={toggleDarkMode}
-          className="p-2 hover:bg-slate-100 rounded-lg"
+          className="p-2 hover:bg-gray-100 rounded-lg"
         >
           {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
         </Button>
@@ -71,7 +77,7 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
             <Button 
               variant="ghost" 
               size="sm" 
-              className="relative p-2 hover:bg-slate-100 rounded-lg"
+              className="relative p-2 hover:bg-gray-100 rounded-lg"
             >
               <Bell className="w-4 h-4" />
               {unreadCount > 0 && (
@@ -94,10 +100,10 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
                     {notification.title}
                   </span>
                   {notification.unread && (
-                    <div className="w-2 h-2 bg-travel-blue-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                   )}
                 </div>
-                <span className="text-xs text-slate-500">{notification.time}</span>
+                <span className="text-xs text-gray-500">{notification.time}</span>
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
@@ -106,22 +112,22 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
         {/* User Profile */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="flex items-center gap-2 p-2 hover:bg-slate-100 rounded-lg">
-              <div className="w-8 h-8 bg-travel-blue-500 rounded-full flex items-center justify-center">
+            <Button variant="ghost" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-lg">
+              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
                 <span className="text-white text-sm font-medium">{user.avatar}</span>
               </div>
               <div className="hidden md:block text-left">
-                <p className="text-sm font-medium text-slate-900">{user.name}</p>
-                <p className="text-xs text-slate-500 capitalize">{user.role}</p>
+                <p className="text-sm font-medium text-gray-900">{user.name}</p>
+                <p className="text-xs text-gray-500 capitalize">{user.role}</p>
               </div>
-              <ChevronDown className="w-4 h-4 text-slate-400" />
+              <ChevronDown className="w-4 h-4 text-gray-400" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>
               <div>
                 <p className="font-medium">{user.name}</p>
-                <p className="text-sm text-slate-500">{user.email}</p>
+                <p className="text-sm text-gray-500">{user.email}</p>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />

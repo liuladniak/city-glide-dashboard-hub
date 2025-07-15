@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, User } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 interface RoleDemoProps {
   currentRole: string;
@@ -25,30 +25,27 @@ export function RoleDemo({ currentRole, onRoleChange }: RoleDemoProps) {
   const currentRoleData = roles.find(role => role.value === currentRole);
 
   return (
-    <div className="flex items-center gap-2 p-2 bg-amber-50 border border-amber-200 rounded-lg">
-      <User className="w-4 h-4 text-amber-600" />
-      <span className="text-sm text-amber-700 font-medium">Demo Mode:</span>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="sm" className="h-8 gap-1">
-            <Badge className={currentRoleData?.color}>
-              {currentRoleData?.label}
-            </Badge>
-            <ChevronDown className="w-3 h-3" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          {roles.map((role) => (
-            <DropdownMenuItem
-              key={role.value}
-              onClick={() => onRoleChange(role.value)}
-              className={currentRole === role.value ? "bg-slate-100" : ""}
-            >
-              <Badge className={role.color}>{role.label}</Badge>
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="sm" className="h-8 gap-2 px-3 hover:bg-gray-100">
+          <span className="text-xs text-gray-600 font-medium">Demo:</span>
+          <Badge className={currentRoleData?.color}>
+            {currentRoleData?.label}
+          </Badge>
+          <ChevronDown className="w-3 h-3" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {roles.map((role) => (
+          <DropdownMenuItem
+            key={role.value}
+            onClick={() => onRoleChange(role.value)}
+            className={currentRole === role.value ? "bg-gray-100" : ""}
+          >
+            <Badge className={role.color}>{role.label}</Badge>
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

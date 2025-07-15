@@ -4,7 +4,6 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { DashboardSidebar } from "./DashboardSidebar";
 import { DashboardHeader } from "./DashboardHeader";
 import { DashboardContent } from "./DashboardContent";
-import { RoleDemo } from "./RoleDemo";
 
 export const DashboardLayout = () => {
   const [currentRole, setCurrentRole] = useState("admin");
@@ -21,13 +20,14 @@ export const DashboardLayout = () => {
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-slate-50">
+      <div className="min-h-screen flex w-full bg-gray-50">
         <DashboardSidebar userRole={currentRole} />
-        <div className="flex-1 flex flex-col">
-          <DashboardHeader user={{ ...currentUser, role: currentRole }} />
-          <div className="p-4">
-            <RoleDemo currentRole={currentRole} onRoleChange={handleRoleChange} />
-          </div>
+        <div className="flex-1 flex flex-col min-w-0">
+          <DashboardHeader 
+            user={{ ...currentUser, role: currentRole }} 
+            currentRole={currentRole}
+            onRoleChange={handleRoleChange}
+          />
           <DashboardContent userRole={currentRole} />
         </div>
       </div>

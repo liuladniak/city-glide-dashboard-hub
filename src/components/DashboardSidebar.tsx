@@ -78,20 +78,20 @@ export function DashboardSidebar({ userRole }: DashboardSidebarProps) {
 
   const getNavCls = (active: boolean) =>
     active 
-      ? "bg-travel-blue-100 text-travel-blue-700 border-r-2 border-travel-blue-500" 
-      : "text-slate-600 hover:bg-slate-100 hover:text-slate-900";
+      ? "bg-blue-100 text-blue-700 border-r-2 border-blue-500" 
+      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900";
 
   return (
-    <Sidebar className={`${isCollapsed ? "w-16" : "w-64"} border-r border-slate-200 bg-white`}>
-      <SidebarHeader className="border-b border-slate-200 p-4">
+    <Sidebar className={`${isCollapsed ? "w-16" : "w-64"} border-r border-gray-200 bg-white shadow-sm`}>
+      <SidebarHeader className="border-b border-gray-200 p-4">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-travel-blue-500 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
             <Plane className="w-4 h-4 text-white" />
           </div>
           {!isCollapsed && (
             <div>
-              <h1 className="font-semibold text-slate-900">TourFlow</h1>
-              <p className="text-xs text-slate-500 capitalize">{userRole} Panel</p>
+              <h1 className="font-semibold text-gray-900">TourFlow</h1>
+              <p className="text-xs text-gray-500 capitalize">{userRole} Panel</p>
             </div>
           )}
         </div>
@@ -99,7 +99,7 @@ export function DashboardSidebar({ userRole }: DashboardSidebarProps) {
 
       <SidebarContent className="p-2">
         <SidebarGroup>
-          <SidebarGroupLabel className={isCollapsed ? "sr-only" : "text-xs font-medium text-slate-500 px-3 mb-2"}>
+          <SidebarGroupLabel className={isCollapsed ? "sr-only" : "text-xs font-medium text-gray-500 px-3 mb-2"}>
             Navigation
           </SidebarGroupLabel>
           <SidebarGroupContent>
