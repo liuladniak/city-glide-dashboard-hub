@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { 
   Home, 
   Calendar, 
@@ -10,9 +11,12 @@ import {
   MapPin,
   Plane,
   FileText,
-  HeadphonesIcon
+  HeadphonesIcon,
+  Sun,
+  Moon
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import {
   Sidebar,
   SidebarContent,
@@ -23,11 +27,15 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarHeader,
+  SidebarFooter,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { RoleDemo } from "./RoleDemo";
 
 interface DashboardSidebarProps {
   userRole: string;
+  currentRole: string;
+  onRoleChange: (role: string) => void;
 }
 
 const navigationItems = {
@@ -62,11 +70,12 @@ const navigationItems = {
   ],
 };
 
-export function DashboardSidebar({ userRole }: DashboardSidebarProps) {
+export function DashboardSidebar({ userRole, currentRole, onRoleChange }: DashboardSidebarProps) {
   const { state } = useSidebar();
   const location = useLocation();
   const currentPath = location.pathname;
   const isCollapsed = state === "collapsed";
+  const [darkMode, setDarkMode] = useState(false);
 
   const items = navigationItems[userRole as keyof typeof navigationItems] || navigationItems.admin;
 
@@ -80,6 +89,11 @@ export function DashboardSidebar({ userRole }: DashboardSidebarProps) {
     active 
       ? "bg-blue-100 text-blue-700 border-r-2 border-blue-500" 
       : "text-gray-600 hover:bg-gray-100 hover:text-gray-900";
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.documentElement.classList.toggle('dark');
+  };
 
   return (
     <Sidebar className={`${isCollapsed ? "w-16" : "w-64"} border-r border-gray-200 bg-white shadow-sm`}>
@@ -121,6 +135,24 @@ export function DashboardSidebar({ userRole }: DashboardSidebarProps) {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
+      <SidebarFooter className="p-4 border-t border-gray-200">
+        <div className="space-y-2">
+          {/* Role Demo */}
+          <RoleDemo currentRole={currentRole} onRoleChange={onRoleChange} />
+          
+          {/* Dark Mode Toggle */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={toggleDarkMode}
+            className="w-full justify-start gap-2 h-8"
+          >
+            {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            {!isCollapsed && <span className="text-sm">{darkMode ? 'Light Mode' : 'Dark Mode'}</span>}
+          </Button>
+        </div>
+      </SidebarFooter>
     </Sidebar>
   );
 }

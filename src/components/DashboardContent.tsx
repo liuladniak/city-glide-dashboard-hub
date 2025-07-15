@@ -1,5 +1,4 @@
 
-import { WeatherWidget } from "./WeatherWidget";
 import { QuickActions } from "./QuickActions";
 import { MyTasks } from "./MyTasks";
 import { TeamPresence } from "./TeamPresence";
@@ -22,7 +21,7 @@ export function DashboardContent({ userRole }: DashboardContentProps) {
             <p className="text-gray-600">Welcome back! Here's what's happening with your tours today.</p>
           </div>
           <div className="flex items-center gap-3">
-            <WeatherWidget />
+            <QuickActions userRole={userRole} />
           </div>
         </div>
 
@@ -32,9 +31,6 @@ export function DashboardContent({ userRole }: DashboardContentProps) {
             <OverviewCards userRole={userRole} />
           </div>
         )}
-
-        {/* Priority Actions */}
-        <QuickActions userRole={userRole} />
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">

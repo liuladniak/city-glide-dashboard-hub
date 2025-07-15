@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Settings } from "lucide-react";
 
 interface RoleDemoProps {
   currentRole: string;
@@ -27,22 +27,25 @@ export function RoleDemo({ currentRole, onRoleChange }: RoleDemoProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="h-8 gap-2 px-3 hover:bg-gray-100">
-          <span className="text-xs text-gray-600 font-medium">Demo:</span>
-          <Badge className={currentRoleData?.color}>
-            {currentRoleData?.label}
-          </Badge>
-          <ChevronDown className="w-3 h-3" />
+        <Button variant="ghost" size="sm" className="w-full justify-start gap-2 h-8">
+          <Settings className="w-4 h-4" />
+          <span className="text-xs">Demo Role</span>
+          <ChevronDown className="w-3 h-3 ml-auto" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="w-48">
         {roles.map((role) => (
           <DropdownMenuItem
             key={role.value}
             onClick={() => onRoleChange(role.value)}
-            className={currentRole === role.value ? "bg-gray-100" : ""}
+            className={`flex items-center gap-2 ${currentRole === role.value ? "bg-gray-100" : ""}`}
           >
-            <Badge className={role.color}>{role.label}</Badge>
+            <Badge className={role.color} variant="secondary">
+              {role.label}
+            </Badge>
+            {currentRole === role.value && (
+              <span className="text-xs text-gray-500 ml-auto">Current</span>
+            )}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

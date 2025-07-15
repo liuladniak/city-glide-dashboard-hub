@@ -21,7 +21,11 @@ export const DashboardLayout = () => {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gray-50">
-        <DashboardSidebar userRole={currentRole} />
+        <DashboardSidebar 
+          userRole={currentRole} 
+          currentRole={currentRole}
+          onRoleChange={handleRoleChange}
+        />
         <div className="flex-1 flex flex-col min-w-0">
           <DashboardHeader 
             user={{ ...currentUser, role: currentRole }} 

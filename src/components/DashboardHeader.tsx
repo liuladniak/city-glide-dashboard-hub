@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Search, Bell, ChevronDown, Sun, Moon } from "lucide-react";
+import { Search, Bell, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
-import { RoleDemo } from "./RoleDemo";
+import { WeatherWidget } from "./WeatherWidget";
 
 interface User {
   name: string;
@@ -28,8 +28,7 @@ interface DashboardHeaderProps {
   onRoleChange: (role: string) => void;
 }
 
-export function DashboardHeader({ user, currentRole, onRoleChange }: DashboardHeaderProps) {
-  const [darkMode, setDarkMode] = useState(false);
+export function DashboardHeader({ user }: DashboardHeaderProps) {
   const [notifications] = useState([
     { id: 1, title: "New booking received", time: "2 min ago", unread: true },
     { id: 2, title: "Payment confirmed", time: "15 min ago", unread: true },
@@ -37,11 +36,6 @@ export function DashboardHeader({ user, currentRole, onRoleChange }: DashboardHe
   ]);
 
   const unreadCount = notifications.filter(n => n.unread).length;
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle('dark');
-  };
 
   return (
     <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 shadow-sm">
@@ -58,18 +52,8 @@ export function DashboardHeader({ user, currentRole, onRoleChange }: DashboardHe
       </div>
 
       <div className="flex items-center gap-4">
-        {/* Role Switcher */}
-        <RoleDemo currentRole={currentRole} onRoleChange={onRoleChange} />
-
-        {/* Dark Mode Toggle */}
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={toggleDarkMode}
-          className="p-2 hover:bg-gray-100 rounded-lg"
-        >
-          {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-        </Button>
+        {/* Weather Widget */}
+        <WeatherWidget />
 
         {/* Notifications */}
         <DropdownMenu>
