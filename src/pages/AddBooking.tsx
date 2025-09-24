@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { Calendar, Users, Clock, DollarSign, Phone, Mail, User, MapPin, CreditCard, FileText, Search } from "lucide-react";
+import { Calendar, Users, Clock, DollarSign, Phone, Mail, User, MapPin, CreditCard, FileText, Search, Copy, Check, Link } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { DashboardSidebar } from "@/components/DashboardSidebar";
 import { DashboardHeader } from "@/components/DashboardHeader";
@@ -45,6 +45,9 @@ const AddBooking= () => {
     notes: ""
   });
 
+  const [paymentLink, setPaymentLink] = useState("");
+  const [linkCopied, setLinkCopied] = useState(false);
+
   const tourPackages = [
     { id: "historic-old-town", name: "Historic Old Town Walk", duration: "3 hours", price: 45, description: "Explore Sultanahmet's iconic landmarks" },
     { id: "bosporus-shoreline", name: "Bosporus Shoreline Tour", duration: "4 hours", price: 65, description: "Scenic waterfront walking tour" },
@@ -60,6 +63,27 @@ const AddBooking= () => {
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    // Reset payment link when payment method changes
+    if (field === "paymentMethod") {
+      setPaymentLink("");
+      setLinkCopied(false);
+    }
+  };
+
+  const generatePaymentLink = () => {
+    const total = calculateTotal();
+    const link = `https://pay.citygo.com/booking/${Date.now()}?amount=${total}&customer=${encodeURIComponent(formData.customerName)}`;
+    setPaymentLink(link);
+  };
+
+  const copyPaymentLink = async () => {
+    try {
+      await navigator.clipboard.writeText(paymentLink);
+      setLinkCopied(true);
+      setTimeout(() => setLinkCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy link");
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -110,56 +134,57 @@ const AddBooking= () => {
                     <h3 className="text-lg font-semibold text-foreground">Customer Information</h3>
                   </div>
                   <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="customerName">Full Name *</Label>
-                      <Input
-                        id="customerName"
-                        placeholder="Enter customer full name"
-                        value={formData.customerName}
-                        onChange={(e) => handleInputChange("customerName", e.target.value)}
-                        required
-                        className="focus:ring-primary"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="nationality">Nationality</Label>
-                      <Input
-                        id="nationality"
-                        placeholder="e.g., Turkish, American"
-                        value={formData.nationality}
-                        onChange={(e) => handleInputChange("nationality", e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email Address *</Label>
-                      <div className="relative">
-                        <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          id="email"
-                          type="email"
-                          placeholder="customer@example.com"
-                          value={formData.email}
-                          onChange={(e) => handleInputChange("email", e.target.value)}
-                          className="pl-10"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="phone">Phone Number *</Label>
-                      <div className="relative">
-                        <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          id="phone"
-                          type="tel"
-                          placeholder="+90 555 123 4567"
-                          value={formData.phone}
-                          onChange={(e) => handleInputChange("phone", e.target.value)}
-                          className="pl-10"
-                          required
-                        />
-                      </div>
-                    </div>
+                     <div className="space-y-2">
+                       <Label htmlFor="customerName" className="text-sm font-medium text-foreground">Full Name *</Label>
+                       <Input
+                         id="customerName"
+                         placeholder="Enter customer full name"
+                         value={formData.customerName}
+                         onChange={(e) => handleInputChange("customerName", e.target.value)}
+                         required
+                         className="border-2 border-input bg-background px-4 py-2 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-colors"
+                       />
+                     </div>
+                     <div className="space-y-2">
+                       <Label htmlFor="nationality" className="text-sm font-medium text-foreground">Nationality</Label>
+                       <Input
+                         id="nationality"
+                         placeholder="e.g., Turkish, American"
+                         value={formData.nationality}
+                         onChange={(e) => handleInputChange("nationality", e.target.value)}
+                         className="border-2 border-input bg-background px-4 py-2 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-colors"
+                       />
+                     </div>
+                     <div className="space-y-2">
+                       <Label htmlFor="email" className="text-sm font-medium text-foreground">Email Address *</Label>
+                       <div className="relative">
+                         <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground pointer-events-none" />
+                         <Input
+                           id="email"
+                           type="email"
+                           placeholder="customer@example.com"
+                           value={formData.email}
+                           onChange={(e) => handleInputChange("email", e.target.value)}
+                           className="border-2 border-input bg-background pl-10 pr-4 py-2 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-colors"
+                           required
+                         />
+                       </div>
+                     </div>
+                     <div className="space-y-2">
+                       <Label htmlFor="phone" className="text-sm font-medium text-foreground">Phone Number *</Label>
+                       <div className="relative">
+                         <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground pointer-events-none" />
+                         <Input
+                           id="phone"
+                           type="tel"
+                           placeholder="+90 555 123 4567"
+                           value={formData.phone}
+                           onChange={(e) => handleInputChange("phone", e.target.value)}
+                           className="border-2 border-input bg-background pl-10 pr-4 py-2 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-colors"
+                           required
+                         />
+                       </div>
+                     </div>
                   </div>
                 </div>
 
@@ -172,12 +197,12 @@ const AddBooking= () => {
                     <h3 className="text-lg font-semibold text-foreground">Tour Selection</h3>
                   </div>
                   <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="tourPackage">Select Tour *</Label>
-                      <Select value={formData.tourPackage} onValueChange={(value) => handleInputChange("tourPackage", value)}>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Choose a tour or select custom" />
-                        </SelectTrigger>
+                     <div className="space-y-2">
+                       <Label htmlFor="tourPackage" className="text-sm font-medium text-foreground">Select Tour *</Label>
+                       <Select value={formData.tourPackage} onValueChange={(value) => handleInputChange("tourPackage", value)}>
+                         <SelectTrigger className="border-2 border-input bg-background px-3 py-2 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-colors w-full">
+                           <SelectValue placeholder="Choose a tour or select custom" />
+                         </SelectTrigger>
                         <SelectContent>
                           {tourPackages.map((tour) => (
                             <SelectItem key={tour.id} value={tour.id}>
@@ -320,59 +345,119 @@ const AddBooking= () => {
                 <Separator />
 
                 {/* Payment Details */}
-                <div className="space-y-4">
+                <div className="space-y-6">
                   <div className="flex items-center gap-2 mb-4">
                     <CreditCard className="h-5 w-5 text-primary" />
                     <h3 className="text-lg font-semibold text-foreground">Payment Details</h3>
                   </div>
+                  
                   <div className="grid md:grid-cols-3 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="paymentMethod">Payment Method *</Label>
+                      <Label htmlFor="paymentMethod" className="text-sm font-medium text-foreground">Payment Method *</Label>
                       <Select value={formData.paymentMethod} onValueChange={(value) => handleInputChange("paymentMethod", value)}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select method" />
+                        <SelectTrigger className="border-2 border-input bg-background px-3 py-2 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-colors">
+                          <SelectValue placeholder="Select payment method" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="z-50 bg-popover border-2 border-border shadow-lg">
                           <SelectItem value="cash">Cash</SelectItem>
-                          <SelectItem value="card">Credit/Debit Card</SelectItem>
+                          <SelectItem value="card-pos">Card (POS device)</SelectItem>
+                          <SelectItem value="online-payment">Online Payment Link</SelectItem>
                           <SelectItem value="bank-transfer">Bank Transfer</SelectItem>
-                          <SelectItem value="paypal">PayPal</SelectItem>
-                          <SelectItem value="stripe">Stripe</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
+
                     <div className="space-y-2">
-                      <Label htmlFor="amount">Amount (€) {isCustomTour && "*"}</Label>
+                      <Label htmlFor="amount" className="text-sm font-medium text-foreground">
+                        Amount (€) {isCustomTour && "*"}
+                      </Label>
                       <div className="relative">
-                        <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                        <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground pointer-events-none" />
                         <Input
                           id="amount"
                           type="number"
                           step="0.01"
-                          placeholder="0.00"
-                          value={formData.amount}
+                          placeholder={isCustomTour ? "Enter amount" : calculateTotal().toString()}
+                          value={formData.amount || (isCustomTour ? "" : calculateTotal().toString())}
                           onChange={(e) => handleInputChange("amount", e.target.value)}
-                          className="pl-10"
+                          className="border-2 border-input bg-background pl-10 pr-4 py-2 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-colors"
                           required={isCustomTour}
                           disabled={!isCustomTour}
                         />
                       </div>
                     </div>
+
                     <div className="space-y-2">
-                      <Label htmlFor="paymentStatus">Payment Status</Label>
+                      <Label htmlFor="paymentStatus" className="text-sm font-medium text-foreground">Payment Status *</Label>
                       <Select value={formData.paymentStatus} onValueChange={(value) => handleInputChange("paymentStatus", value)}>
-                        <SelectTrigger>
+                        <SelectTrigger className="border-2 border-input bg-background px-3 py-2 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-colors">
                           <SelectValue placeholder="Select status" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="z-50 bg-popover border-2 border-border shadow-lg">
                           <SelectItem value="paid">Paid</SelectItem>
                           <SelectItem value="pending">Pending</SelectItem>
-                          <SelectItem value="partial">Partial Payment</SelectItem>
-                          <SelectItem value="refunded">Refunded</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
+
+                  {/* Payment Method Specific Content */}
+                  {formData.paymentMethod === "card-pos" && (
+                    <div className="p-4 bg-blue-50 border-2 border-blue-200 rounded-lg">
+                      <div className="flex items-center gap-2 text-blue-800 mb-2">
+                        <CreditCard className="h-4 w-4" />
+                        <span className="text-sm font-medium">Card Payment (POS Device)</span>
+                      </div>
+                      <p className="text-sm text-blue-700">
+                        The payment amount will be sent to your connected card reader device for the customer to complete the transaction.
+                      </p>
+                    </div>
+                  )}
+
+                  {formData.paymentMethod === "online-payment" && (
+                    <div className="p-4 bg-green-50 border-2 border-green-200 rounded-lg space-y-3">
+                      <div className="flex items-center gap-2 text-green-800 mb-2">
+                        <Link className="h-4 w-4" />
+                        <span className="text-sm font-medium">Online Payment Link</span>
+                      </div>
+                      <p className="text-sm text-green-700">
+                        Generate a secure payment link to share with your customer for online payment.
+                      </p>
+                      
+                      {!paymentLink ? (
+                        <Button 
+                          type="button"
+                          onClick={generatePaymentLink}
+                          disabled={!formData.customerName || calculateTotal() === 0}
+                          className="bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2"
+                        >
+                          Generate Payment Link
+                        </Button>
+                      ) : (
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <Input 
+                              value={paymentLink}
+                              readOnly
+                              className="text-sm bg-white border-green-300"
+                            />
+                            <Button
+                              type="button"
+                              onClick={copyPaymentLink}
+                              variant="outline"
+                              size="sm"
+                              className="border-green-300 text-green-700 hover:bg-green-50"
+                            >
+                              {linkCopied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                            </Button>
+                          </div>
+                          <p className="text-xs text-green-600">
+                            {linkCopied ? "Link copied to clipboard!" : "Share this link with your customer"}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 <Separator />
@@ -397,10 +482,18 @@ const AddBooking= () => {
 
                 {/* Submit Buttons */}
                 <div className="flex gap-4 pt-8">
-                  <Button type="submit" className="flex-1 bg-primary hover:bg-primary/90">
+                  <Button 
+                    type="submit" 
+                    className="flex-1 bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg border-2 border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-colors"
+                  >
                     Save Booking
                   </Button>
-                  <Button type="button" variant="outline" onClick={() => navigate("/")} className="px-8">
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={() => navigate("/")} 
+                    className="px-8 py-3 font-medium border-2 border-input bg-background hover:bg-accent focus:ring-2 focus:ring-primary/20 focus:outline-none transition-colors"
+                  >
                     Cancel
                   </Button>
                 </div>
