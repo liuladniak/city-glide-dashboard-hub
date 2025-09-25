@@ -5,7 +5,11 @@ import { DashboardSidebar } from "./DashboardSidebar";
 import { DashboardHeader } from "./DashboardHeader";
 import { DashboardContent } from "./DashboardContent";
 
-export const DashboardLayout = () => {
+interface DashboardLayoutProps {
+  children?: React.ReactNode;
+}
+
+export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const [currentRole, setCurrentRole] = useState("admin");
   const [currentUser] = useState({
     name: "Sarah Johnson",
@@ -32,7 +36,9 @@ export const DashboardLayout = () => {
             currentRole={currentRole}
             onRoleChange={handleRoleChange}
           />
-          <DashboardContent userRole={currentRole} />
+          <main className="flex-1 p-6 overflow-auto">
+            {children || <DashboardContent userRole={currentRole} />}
+          </main>
         </div>
       </div>
     </SidebarProvider>
