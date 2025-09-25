@@ -322,6 +322,21 @@ export function MyTasks() {
                   
                   <CollapsibleContent className="pt-3 border-t border-border/50 mt-3">
                     <div className="space-y-3">
+                      <div className="grid grid-cols-2 gap-3 text-xs">
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-3 h-3 text-muted-foreground" />
+                          <span className="text-muted-foreground">Due:</span>
+                          <span className="font-medium text-card-foreground">{task.dueDate}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <AlertCircle className="w-3 h-3 text-muted-foreground" />
+                          <span className="text-muted-foreground">Priority:</span>
+                          <Badge className={`text-xs px-2 py-0.5 border ${getPriorityColor(task.priority)}`}>
+                            {task.priority}
+                          </Badge>
+                        </div>
+                      </div>
+                      
                       {task.relatedBooking && (
                         <div className="flex items-center gap-2">
                           <MapPin className="w-3 h-3 text-muted-foreground" />
@@ -335,7 +350,7 @@ export function MyTasks() {
                           <FileText className="w-3 h-3 text-muted-foreground mt-0.5" />
                           <div>
                             <p className="text-xs text-muted-foreground mb-1">Notes:</p>
-                            <p className="text-xs text-card-foreground">{task.notes}</p>
+                            <p className="text-xs text-card-foreground bg-muted/20 p-2 rounded border">{task.notes}</p>
                           </div>
                         </div>
                       )}
