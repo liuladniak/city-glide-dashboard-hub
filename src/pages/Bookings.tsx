@@ -199,59 +199,59 @@ export default function Bookings() {
         {/* Stats Cards */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Card className="card-hover">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between gap-4">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between gap-3">
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-muted-foreground">Total Bookings</p>
-                  <p className="text-3xl font-bold text-foreground mt-2">{bookingsData.length}</p>
+                  <p className="text-xs font-medium text-muted-foreground">Total Bookings</p>
+                  <p className="text-2xl font-bold text-foreground mt-1">{bookingsData.length}</p>
                 </div>
-                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Calendar className="w-7 h-7 text-primary" />
+                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Calendar className="w-5 h-5 text-primary" />
                 </div>
               </div>
             </CardContent>
           </Card>
           <Card className="card-hover">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between gap-4">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between gap-3">
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-muted-foreground">Confirmed</p>
-                  <p className="text-3xl font-bold text-green-600 dark:text-green-500 mt-2">
+                  <p className="text-xs font-medium text-muted-foreground">Confirmed</p>
+                  <p className="text-2xl font-bold text-green-600 dark:text-green-500 mt-1">
                     {bookingsData.filter(b => b.status === "confirmed").length}
                   </p>
                 </div>
-                <div className="w-14 h-14 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Calendar className="w-7 h-7 text-green-600 dark:text-green-500" />
+                <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Calendar className="w-5 h-5 text-green-600 dark:text-green-500" />
                 </div>
               </div>
             </CardContent>
           </Card>
           <Card className="card-hover">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between gap-4">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between gap-3">
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-muted-foreground">Pending</p>
-                  <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-500 mt-2">
+                  <p className="text-xs font-medium text-muted-foreground">Pending</p>
+                  <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-500 mt-1">
                     {bookingsData.filter(b => b.status === "pending").length}
                   </p>
                 </div>
-                <div className="w-14 h-14 bg-yellow-100 dark:bg-yellow-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-7 h-7 text-yellow-600 dark:text-yellow-500" />
+                <div className="w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-5 h-5 text-yellow-600 dark:text-yellow-500" />
                 </div>
               </div>
             </CardContent>
           </Card>
           <Card className="card-hover">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between gap-4">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between gap-3">
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-muted-foreground">Total Guests</p>
-                  <p className="text-3xl font-bold text-foreground mt-2">
+                  <p className="text-xs font-medium text-muted-foreground">Total Guests</p>
+                  <p className="text-2xl font-bold text-foreground mt-1">
                     {bookingsData.reduce((sum, b) => sum + b.guests, 0)}
                   </p>
                 </div>
-                <div className="w-14 h-14 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Users className="w-7 h-7 text-purple-600 dark:text-purple-500" />
+                <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Users className="w-5 h-5 text-purple-600 dark:text-purple-500" />
                 </div>
               </div>
             </CardContent>
@@ -260,20 +260,20 @@ export default function Bookings() {
 
         {/* Filters and Search */}
         <Card>
-          <CardContent className="p-6">
-            <div className="flex flex-col lg:flex-row gap-4">
+          <CardContent className="p-4">
+            <div className="flex flex-col lg:flex-row gap-3">
               <div className="flex-1 relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
                 <Input
                   placeholder="Search by client, tour, or booking ID..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 h-10"
+                  className="pl-10 h-9"
                 />
               </div>
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-full sm:w-[160px] h-10">
+                  <SelectTrigger className="w-full sm:w-[140px] h-9">
                     <SelectValue placeholder="Filter by status" />
                   </SelectTrigger>
                   <SelectContent>
@@ -284,7 +284,7 @@ export default function Bookings() {
                   </SelectContent>
                 </Select>
                 <Select value={dateFilter} onValueChange={setDateFilter}>
-                  <SelectTrigger className="w-full sm:w-[160px] h-10">
+                  <SelectTrigger className="w-full sm:w-[140px] h-9">
                     <SelectValue placeholder="Filter by date" />
                   </SelectTrigger>
                   <SelectContent>
@@ -328,24 +328,24 @@ export default function Bookings() {
                       </TableCell>
                     </TableRow>
                   ) : (
-                    filteredBookings.map((booking) => (
+                     filteredBookings.map((booking) => (
                       <TableRow key={booking.id} className="hover:bg-muted/30">
-                        <TableCell className="font-mono text-sm font-medium">{booking.id}</TableCell>
-                        <TableCell>
+                        <TableCell className="font-mono text-sm font-medium text-foreground align-middle">{booking.id}</TableCell>
+                        <TableCell className="align-middle">
                           <div className="min-w-[160px]">
                             <div className="font-medium text-foreground">{booking.client}</div>
                             <div className="text-xs text-muted-foreground mt-0.5">{booking.email}</div>
                           </div>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="align-middle">
                           <div className="flex items-center gap-2 min-w-[180px]">
                             <MapPin className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                            <span className="text-sm">{booking.tour}</span>
+                            <span className="text-sm text-foreground">{booking.tour}</span>
                           </div>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="align-middle">
                           <div className="min-w-[130px]">
-                            <div className="flex items-center gap-1.5 text-sm">
+                            <div className="flex items-center gap-1.5 text-sm text-foreground">
                               <Calendar className="w-3.5 h-3.5 text-muted-foreground" />
                               <span>{formatDate(booking.date)}</span>
                             </div>
@@ -355,24 +355,24 @@ export default function Bookings() {
                             </div>
                           </div>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="align-middle">
                           <div className="flex items-center gap-1.5">
                             <Users className="w-4 h-4 text-muted-foreground" />
-                            <span className="font-medium">{booking.guests}</span>
+                            <span className="font-medium text-foreground">{booking.guests}</span>
                           </div>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="align-middle">
                           <span className="text-sm text-foreground">{booking.guide}</span>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="align-middle">
                           <Badge variant={getStatusVariant(booking.status)} className="capitalize">
                             {booking.status}
                           </Badge>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="align-middle">
                           <span className="font-semibold text-foreground">{booking.amount}</span>
                         </TableCell>
-                        <TableCell className="text-right">
+                        <TableCell className="text-right align-middle">
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                               <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
