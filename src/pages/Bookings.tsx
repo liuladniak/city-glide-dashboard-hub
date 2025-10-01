@@ -140,16 +140,16 @@ export default function Bookings() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [dateFilter, setDateFilter] = useState("all");
 
-  const getStatusColor = (status: string) => {
+  const getStatusVariant = (status: string): "success" | "warning" | "cancelled" | "default" => {
     switch (status) {
       case "confirmed":
-        return "bg-green-100 text-green-800 border-green-200";
+        return "success";
       case "pending":
-        return "bg-yellow-100 text-yellow-800 border-yellow-200";
+        return "warning";
       case "cancelled":
-        return "bg-red-100 text-red-800 border-red-200";
+        return "cancelled";
       default:
-        return "bg-gray-100 text-gray-800 border-gray-200";
+        return "default";
     }
   };
 
@@ -177,14 +177,14 @@ export default function Bookings() {
     <DashboardLayout>
       <div className="space-y-6">
         {/* Header Section */}
-        <div className="flex justify-between items-start">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <h1 className="text-3xl font-bold text-foreground">Bookings</h1>
             <p className="text-muted-foreground mt-1">
               Manage all tour bookings and reservations
             </p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <Button variant="outline" size="default">
               <Download className="w-4 h-4 mr-2" />
               Export
@@ -197,61 +197,61 @@ export default function Bookings() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid gap-4 md:grid-cols-4">
-          <Card>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Card className="card-hover">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Total Bookings</p>
-                  <p className="text-2xl font-bold text-foreground mt-1">{bookingsData.length}</p>
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-muted-foreground">Total Bookings</p>
+                  <p className="text-3xl font-bold text-foreground mt-2">{bookingsData.length}</p>
                 </div>
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <Calendar className="w-6 h-6 text-blue-600" />
+                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Calendar className="w-7 h-7 text-primary" />
                 </div>
               </div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="card-hover">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Confirmed</p>
-                  <p className="text-2xl font-bold text-green-600 mt-1">
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-muted-foreground">Confirmed</p>
+                  <p className="text-3xl font-bold text-green-600 dark:text-green-500 mt-2">
                     {bookingsData.filter(b => b.status === "confirmed").length}
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                  <Calendar className="w-6 h-6 text-green-600" />
+                <div className="w-14 h-14 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Calendar className="w-7 h-7 text-green-600 dark:text-green-500" />
                 </div>
               </div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="card-hover">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Pending</p>
-                  <p className="text-2xl font-bold text-yellow-600 mt-1">
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-muted-foreground">Pending</p>
+                  <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-500 mt-2">
                     {bookingsData.filter(b => b.status === "pending").length}
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                  <Clock className="w-6 h-6 text-yellow-600" />
+                <div className="w-14 h-14 bg-yellow-100 dark:bg-yellow-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-7 h-7 text-yellow-600 dark:text-yellow-500" />
                 </div>
               </div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="card-hover">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Total Guests</p>
-                  <p className="text-2xl font-bold text-foreground mt-1">
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-muted-foreground">Total Guests</p>
+                  <p className="text-3xl font-bold text-foreground mt-2">
                     {bookingsData.reduce((sum, b) => sum + b.guests, 0)}
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <Users className="w-6 h-6 text-purple-600" />
+                <div className="w-14 h-14 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Users className="w-7 h-7 text-purple-600 dark:text-purple-500" />
                 </div>
               </div>
             </CardContent>
@@ -260,115 +260,117 @@ export default function Bookings() {
 
         {/* Filters and Search */}
         <Card>
-          <CardContent className="p-4">
-            <div className="flex flex-col sm:flex-row gap-4">
+          <CardContent className="p-6">
+            <div className="flex flex-col lg:flex-row gap-4">
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
                 <Input
                   placeholder="Search by client, tour, or booking ID..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 h-10"
                 />
               </div>
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-full sm:w-[180px]">
-                  <SelectValue placeholder="Filter by status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Status</SelectItem>
-                  <SelectItem value="confirmed">Confirmed</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="cancelled">Cancelled</SelectItem>
-                </SelectContent>
-              </Select>
-              <Select value={dateFilter} onValueChange={setDateFilter}>
-                <SelectTrigger className="w-full sm:w-[180px]">
-                  <SelectValue placeholder="Filter by date" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Dates</SelectItem>
-                  <SelectItem value="today">Today</SelectItem>
-                  <SelectItem value="week">This Week</SelectItem>
-                  <SelectItem value="month">This Month</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Select value={statusFilter} onValueChange={setStatusFilter}>
+                  <SelectTrigger className="w-full sm:w-[160px] h-10">
+                    <SelectValue placeholder="Filter by status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Status</SelectItem>
+                    <SelectItem value="confirmed">Confirmed</SelectItem>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="cancelled">Cancelled</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select value={dateFilter} onValueChange={setDateFilter}>
+                  <SelectTrigger className="w-full sm:w-[160px] h-10">
+                    <SelectValue placeholder="Filter by date" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Dates</SelectItem>
+                    <SelectItem value="today">Today</SelectItem>
+                    <SelectItem value="week">This Week</SelectItem>
+                    <SelectItem value="month">This Month</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Bookings Table */}
         <Card>
-          <CardHeader>
-            <CardTitle>All Bookings</CardTitle>
+          <CardHeader className="pb-4">
+            <CardTitle className="text-xl">All Bookings</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-0">
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>Booking ID</TableHead>
-                    <TableHead>Client</TableHead>
-                    <TableHead>Tour</TableHead>
-                    <TableHead>Date & Time</TableHead>
-                    <TableHead>Guests</TableHead>
-                    <TableHead>Guide</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Amount</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                  <TableRow className="bg-muted/50">
+                    <TableHead className="font-semibold">Booking ID</TableHead>
+                    <TableHead className="font-semibold">Client</TableHead>
+                    <TableHead className="font-semibold">Tour</TableHead>
+                    <TableHead className="font-semibold">Date & Time</TableHead>
+                    <TableHead className="font-semibold">Guests</TableHead>
+                    <TableHead className="font-semibold">Guide</TableHead>
+                    <TableHead className="font-semibold">Status</TableHead>
+                    <TableHead className="font-semibold">Amount</TableHead>
+                    <TableHead className="text-right font-semibold">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredBookings.length === 0 ? (
                     <TableRow>
-                      <TableCell colSpan={9} className="text-center py-8 text-muted-foreground">
+                      <TableCell colSpan={9} className="text-center py-12 text-muted-foreground">
                         No bookings found
                       </TableCell>
                     </TableRow>
                   ) : (
                     filteredBookings.map((booking) => (
-                      <TableRow key={booking.id}>
-                        <TableCell className="font-medium">{booking.id}</TableCell>
+                      <TableRow key={booking.id} className="hover:bg-muted/30">
+                        <TableCell className="font-mono text-sm font-medium">{booking.id}</TableCell>
                         <TableCell>
-                          <div>
-                            <div className="font-medium">{booking.client}</div>
-                            <div className="text-xs text-muted-foreground">{booking.email}</div>
+                          <div className="min-w-[160px]">
+                            <div className="font-medium text-foreground">{booking.client}</div>
+                            <div className="text-xs text-muted-foreground mt-0.5">{booking.email}</div>
                           </div>
                         </TableCell>
                         <TableCell>
-                          <div className="flex items-center gap-2">
-                            <MapPin className="w-4 h-4 text-muted-foreground" />
-                            <span className="max-w-[200px] truncate">{booking.tour}</span>
+                          <div className="flex items-center gap-2 min-w-[180px]">
+                            <MapPin className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                            <span className="text-sm">{booking.tour}</span>
                           </div>
                         </TableCell>
                         <TableCell>
-                          <div>
-                            <div className="flex items-center gap-1">
-                              <Calendar className="w-3 h-3 text-muted-foreground" />
-                              <span className="text-sm">{formatDate(booking.date)}</span>
+                          <div className="min-w-[130px]">
+                            <div className="flex items-center gap-1.5 text-sm">
+                              <Calendar className="w-3.5 h-3.5 text-muted-foreground" />
+                              <span>{formatDate(booking.date)}</span>
                             </div>
-                            <div className="flex items-center gap-1 mt-1">
-                              <Clock className="w-3 h-3 text-muted-foreground" />
+                            <div className="flex items-center gap-1.5 mt-1">
+                              <Clock className="w-3.5 h-3.5 text-muted-foreground" />
                               <span className="text-xs text-muted-foreground">{booking.time}</span>
                             </div>
                           </div>
                         </TableCell>
                         <TableCell>
-                          <div className="flex items-center gap-1">
+                          <div className="flex items-center gap-1.5">
                             <Users className="w-4 h-4 text-muted-foreground" />
-                            <span>{booking.guests}</span>
+                            <span className="font-medium">{booking.guests}</span>
                           </div>
                         </TableCell>
                         <TableCell>
-                          <span className="text-sm">{booking.guide}</span>
+                          <span className="text-sm text-foreground">{booking.guide}</span>
                         </TableCell>
                         <TableCell>
-                          <Badge className={`${getStatusColor(booking.status)} capitalize`}>
+                          <Badge variant={getStatusVariant(booking.status)} className="capitalize">
                             {booking.status}
                           </Badge>
                         </TableCell>
                         <TableCell>
-                          <span className="font-semibold">{booking.amount}</span>
+                          <span className="font-semibold text-foreground">{booking.amount}</span>
                         </TableCell>
                         <TableCell className="text-right">
                           <DropdownMenu>
@@ -377,7 +379,7 @@ export default function Bookings() {
                                 <MoreHorizontal className="h-4 w-4" />
                               </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
+                            <DropdownMenuContent align="end" className="w-48">
                               <DropdownMenuItem>
                                 <Eye className="mr-2 h-4 w-4" />
                                 View Details
