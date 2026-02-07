@@ -39,7 +39,7 @@ const QuickStatsRibbon = (props: Props) => (
     {items(props).map((item) => (
       <Card key={item.label} className="p-3.5 flex items-start gap-3">
         <div className="w-9 h-9 rounded-lg bg-accent flex items-center justify-center shrink-0">
-          <item.icon className="w-4 h-4 text-primary" />
+          <item.icon className="w-4 h-4 text-foreground" />
         </div>
         <div className="min-w-0">
           <p className="text-xs text-muted-foreground font-medium">{item.label}</p>
@@ -51,7 +51,7 @@ const QuickStatsRibbon = (props: Props) => (
             <p className="text-xs text-muted-foreground">{item.sub}</p>
           )}
           {item.action && (
-            <button className="text-xs text-primary hover:underline font-medium mt-0.5">
+            <button className="text-xs text-foreground hover:underline font-medium mt-0.5">
               {item.action}
             </button>
           )}
