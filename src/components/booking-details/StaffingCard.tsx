@@ -14,7 +14,7 @@ const StaffingCard = ({ guide }: Props) => (
     <CardContent>
       <div className="flex items-center gap-3">
         <Avatar className="w-11 h-11">
-          <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+          <AvatarFallback className="bg-muted text-foreground font-semibold">
             {guide.name.split(" ").map((n) => n[0]).join("")}
           </AvatarFallback>
         </Avatar>

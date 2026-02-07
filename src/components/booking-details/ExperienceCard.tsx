@@ -42,9 +42,9 @@ const ExperienceCard = ({ tourName, description, itinerary, meetingPoint }: Prop
               <div key={i} className="relative">
                 {/* Dot */}
                 <div className={`absolute -left-6 top-0.5 w-[18px] h-[18px] rounded-full border-2 flex items-center justify-center ${
-                  i === 0 ? "border-primary bg-primary" : "border-border bg-card"
+                  i === 0 ? "border-foreground bg-foreground" : "border-border bg-card"
                 }`}>
-                  {i === 0 && <div className="w-1.5 h-1.5 rounded-full bg-primary-foreground" />}
+                  {i === 0 && <div className="w-1.5 h-1.5 rounded-full bg-card" />}
                 </div>
 
                 <div>

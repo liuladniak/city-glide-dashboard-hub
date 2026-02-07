@@ -26,8 +26,8 @@ const GuestManifest = ({ contact, additionalGuests }: Props) => (
           <TableRow>
             <TableCell className="font-medium text-foreground">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
-                  <User className="w-3.5 h-3.5 text-primary" />
+                <div className="w-7 h-7 rounded-full bg-muted flex items-center justify-center">
+                  <User className="w-3.5 h-3.5 text-foreground" />
                 </div>
                 {contact.name}
               </div>
