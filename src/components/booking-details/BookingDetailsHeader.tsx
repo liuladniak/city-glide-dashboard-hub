@@ -45,7 +45,7 @@ const BookingDetailsHeader = ({ reference, status, source, onBack }: Props) => (
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button size="sm" className="gap-1.5">
+          <Button variant="outline" size="sm" className="gap-1.5">
             <Send className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Send Reminder</span>
             <ChevronDown className="w-3 h-3" />
