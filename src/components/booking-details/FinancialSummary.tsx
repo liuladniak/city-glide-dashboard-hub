@@ -38,7 +38,7 @@ const FinancialSummary = ({ total, paid, currency }: Props) => {
         </div>
 
         {balance > 0 && (
-          <Button className="w-full mt-2" size="sm">
+          <Button variant="outline" className="w-full mt-2 border-destructive text-destructive hover:bg-destructive/10" size="sm">
             Collect Payment
           </Button>
         )}

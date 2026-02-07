@@ -45,7 +45,7 @@ const GuestManifest = ({ contact, additionalGuests }: Props) => (
               </div>
             </TableCell>
             <TableCell className="text-right">
-              <Badge variant="default" className="text-xs">Primary</Badge>
+              <Badge variant="secondary" className="text-xs font-semibold">Primary</Badge>
             </TableCell>
           </TableRow>
           {additionalGuests.map((guest) => (
