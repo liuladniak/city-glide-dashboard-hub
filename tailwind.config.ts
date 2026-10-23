@@ -22,6 +22,8 @@ export default {
 			fontFamily: {
 				'inter': ['Inter', 'sans-serif'],
 				'sans': ['Inter', 'ui-sans-serif', 'system-ui'],
+				'serif-folio': ['"Cormorant Garamond"', 'Georgia', 'serif'],
+				'mono-folio': ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -56,6 +58,16 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
+				},
+				folio: {
+					paper: 'hsl(var(--folio-paper))',
+					deep: 'hsl(var(--folio-paper-deep))',
+					ink: 'hsl(var(--folio-ink))',
+					soft: 'hsl(var(--folio-ink-soft))',
+					moss: 'hsl(var(--folio-moss))',
+					sage: 'hsl(var(--folio-sage))',
+					rust: 'hsl(var(--folio-rust))',
+					line: 'hsl(var(--folio-line))'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',

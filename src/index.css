@@ -108,3 +108,30 @@
     @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-1;
   }
 }
+
+/* Portfolio — naturalist field-journal theme (HSL tokens) */
+.folio {
+  --folio-paper: 42 38% 93%;
+  --folio-paper-deep: 40 30% 87%;
+  --folio-ink: 150 18% 14%;
+  --folio-ink-soft: 150 8% 38%;
+  --folio-moss: 148 38% 26%;
+  --folio-sage: 140 14% 78%;
+  --folio-rust: 18 52% 42%;
+  --folio-line: 40 14% 74%;
+  background: hsl(var(--folio-paper));
+  color: hsl(var(--folio-ink));
+}
+.folio-grid {
+  background-image:
+    linear-gradient(hsl(var(--folio-line) / .45) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--folio-line) / .45) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.folio-grain::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .35; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .2 0 0 0 .18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.folio-plate { filter: sepia(.12) saturate(.9) contrast(.98); mix-blend-mode: multiply; }
+@keyframes folio-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.folio-rise { animation: folio-rise 1.1s cubic-bezier(.2,.7,.2,1) both; }
