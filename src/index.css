@@ -135,3 +135,25 @@
 .folio-plate { filter: sepia(.12) saturate(.9) contrast(.98); mix-blend-mode: multiply; }
 @keyframes folio-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 .folio-rise { animation: folio-rise 1.1s cubic-bezier(.2,.7,.2,1) both; }
+
+/* Portfolio 2 — clean editorial theme (HSL tokens) */
+.clean {
+  --c-paper: 0 0% 100%;
+  --c-ink: 235 12% 10%;
+  --c-soft: 235 5% 44%;
+  --c-faint: 235 5% 62%;
+  --c-line: 235 6% 90%;
+  --c-accent: 224 44% 30%;
+  background: hsl(var(--c-paper));
+  color: hsl(var(--c-ink));
+  scroll-behavior: smooth;
+}
+@keyframes clean-rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.clean-rise { animation: clean-rise 0.9s cubic-bezier(.2,.7,.2,1) both; }
+.clean-link { position: relative; }
+.clean-link::after {
+  content: ""; position: absolute; left: 0; bottom: -2px; height: 1px; width: 100%;
+  background: currentColor; transform: scaleX(0); transform-origin: right;
+  transition: transform .35s cubic-bezier(.2,.7,.2,1);
+}
+.clean-link:hover::after { transform: scaleX(1); transform-origin: left; }
