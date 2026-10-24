@@ -15,7 +15,7 @@ const mono = "font-mono-folio text-[10.5px] uppercase tracking-[0.22em]";
 const serif = "font-serif-folio";
 
 const projects = [
-  { no: "I", title: "Tourflow", kind: "Operations platform", year: "2026", stack: "React · Postgres · Edge", img: rings.url, latin: "Annuli temporis", note: "Booking engine and staff dashboard for a city-tours agency." },
+  { no: "I", title: "CityGo", kind: "Booking platform", year: "2026", stack: "React · Node · Postgres", img: rings.url, latin: "Annuli temporis", note: "Booking engine and staff dashboard for a city-tours agency.", href: "/portfolio/citygo" },
   { no: "II", title: "Verdant Ledger", kind: "Fintech API", year: "2025", stack: "Go · gRPC · Kafka", img: bark.url, latin: "Cortex fidelis", note: "Double-entry ledger handling 40k transactions a minute." },
   { no: "III", title: "Herbarium", kind: "Content system", year: "2024", stack: "Next · GraphQL · S3", img: pressed.url, latin: "Folium pressum", note: "Headless archive for a natural-history museum collection." },
   { no: "IV", title: "Murmur", kind: "Realtime infra", year: "2023", stack: "Node · WebRTC · Redis", img: starling.url, latin: "Sturnus vulgaris", note: "Low-latency presence layer for collaborative tools." },
