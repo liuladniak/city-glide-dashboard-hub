@@ -144,7 +144,7 @@ export default function Portfolio() {
         </div>
         <div className="mt-10 grid gap-x-10 gap-y-16 md:grid-cols-2">
           {projects.map((p, i) => (
-            <article key={p.title} className={`group ${i % 2 ? "md:mt-24" : ""}`}>
+            <article key={p.title} onClick={() => "href" in p && p.href && (window.location.href = p.href as string)} className={`group ${"href" in p ? "cursor-pointer" : ""} ${i % 2 ? "md:mt-24" : ""}`}>
               <div className="relative overflow-hidden border border-folio-line bg-folio-deep/40 p-4">
                 <span className={`${mono} absolute left-6 top-6 z-10 text-folio-soft`}>Specimen {p.no}</span>
                 <img src={p.img} alt={p.title} className="folio-plate aspect-[4/5] w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]" />
