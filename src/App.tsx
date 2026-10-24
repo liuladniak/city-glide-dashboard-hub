@@ -11,6 +11,7 @@ import BookingDetails from "./pages/BookingDetails";
 import NotFound from "./pages/NotFound";
 import Portfolio from "./pages/Portfolio";
 import CaseStudy from "./pages/CaseStudy";
+import PortfolioClean from "./pages/PortfolioClean";
 
 const queryClient = new QueryClient();
 
