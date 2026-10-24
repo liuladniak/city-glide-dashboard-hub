@@ -24,6 +24,7 @@ export default {
 				'sans': ['Inter', 'ui-sans-serif', 'system-ui'],
 				'serif-folio': ['"Cormorant Garamond"', 'Georgia', 'serif'],
 				'mono-folio': ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+				'display-clean': ['"Instrument Serif"', 'Georgia', 'serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -68,6 +69,14 @@ export default {
 					sage: 'hsl(var(--folio-sage))',
 					rust: 'hsl(var(--folio-rust))',
 					line: 'hsl(var(--folio-line))'
+				},
+				clean: {
+					paper: 'hsl(var(--c-paper))',
+					ink: 'hsl(var(--c-ink))',
+					soft: 'hsl(var(--c-soft))',
+					faint: 'hsl(var(--c-faint))',
+					line: 'hsl(var(--c-line))',
+					accent: 'hsl(var(--c-accent))'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
